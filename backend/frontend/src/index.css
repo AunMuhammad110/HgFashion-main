@@ -1,0 +1,168 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.next-button{
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 15vw;
+  background-color: #dc3545;
+  color: white;
+}
+.admin-button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 15vw;
+  background-color: #dc3545;
+  color: white;
+}
+.display-flex {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center; */
+  align-items: center;
+}
+.justify-sb{
+  justify-content: space-between;
+}
+.display-flex-col {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+}
+.flex-container{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+}
+.wrapper{
+  height: 60vh;
+  /* width: 100vw; */
+  display: grid;
+  place-items: center;
+  /* padding: 4vh 7vw; */
+}
+
+.h-50 {
+  height: 50vh;
+}
+.h-90 {
+  height: 90vh;
+}
+.hr-mb-10 {
+  margin-bottom: 10px;
+}
+.hr-mb-50{
+    margin-bottom: 50px;
+}
+.hr-mb-50 {
+    margin-bottom: 50px;
+  }
+.hr-mt-10 {
+  margin-top: 10px;
+}
+.hr-ml-70{
+  margin-left: 70vw;
+}
+.hr-ml-3{
+  margin-left: 3vw;
+}
+.hr-mr-3{
+  margin-right: 3vw;
+}
+.hr-ml-55{
+  margin-left: 55vw;
+}
+.hr-mt-20 {
+  margin-top: 20px;
+}
+.hr-mt-30 {
+  margin-top: 30px;
+}
+.hr-mt-40 {
+    margin-top: 40px;
+  }
+.hr-mt-50{
+    margin-top: 50px;
+}
+.hr-pl-20{
+    padding-left: 10px;
+}
+.h-37{
+  height: 37vh;
+}
+
+.w-20{
+  width: 20vw;
+}
+.text-center {
+  text-align: center;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.font-60 {
+  font-size: 50px !important;
+}
+.font-18{
+  font-size: 18px;
+}
+.underline-text {
+  text-decoration: underline;
+}
+.font-grey-color{
+    color: rgb(139, 137, 137);
+}
+.custom-button{
+  background-color: #dc3545; /* Set the background color to red */
+  color: white; /* Set the text color to white */
+  border: none; /* Remove the button border */
+  padding: 10px 40px; /* Add padding for better appearance */
+  border-radius: 5px; /* Add rounded corners */
+  cursor: pointer;
+  width: auto; /* Change cursor to pointer on hover */
+  margin-top: 4vh;
+}
+.custom-button:hover{
+  background-color: transparent !important; 
+  border: 1px solid !important;
+  color: black !important;
+}
+
+
+.not-allowed{
+  cursor: not-allowed;
+}
+.disable-add-button{
+  cursor: not-allowed !important;
+  background-color: #dc3545;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  height: 5%;
+  width: 10vw;
+  margin-left: 11vw !important;
+}
+
+.layout-content{
+  overflow-y:auto ;
+  /* overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap; */
+}
