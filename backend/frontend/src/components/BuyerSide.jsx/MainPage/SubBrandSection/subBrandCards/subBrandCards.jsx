@@ -9,7 +9,7 @@ export default function SubBrandCards(props) {
 
   function Navigator(name, id, e) {
     e.preventDefault();
-    navigate("/product-section", { state: { name: name, id: id } });
+    navigate(`/product-section?name=${name}&id=${id}`);
   }
 
   return (
@@ -21,10 +21,8 @@ export default function SubBrandCards(props) {
         src={image} // Use the provided image or a default one
         alt={"no image"}
       />
-      {/* <div> */}
         <p >{props.subBrandName.toUpperCase()}</p>
         <button>View All</button>
-      {/* </div> */}
     </div>
   );
 }

@@ -7,6 +7,7 @@ const MainPageDataContext = createContext();
 export function MainDataProvider({ children }) {
   const { query } = useRequestProcessor();
 
+
   const { data, isLoading, isError }= query(
     "users",
     async () => {
@@ -37,10 +38,12 @@ export function MainDataProvider({ children }) {
       throw error; // Rethrow the error to propagate it to the caller
     }
   });
+  
+  const _isLoading= isLoading || carrousalData.isLoading || mainPageProducts.isLoading;
 
 
   return (
-    <MainPageDataContext.Provider value={{ data, isLoading, isError,carrousalData,mainPageProducts }}>
+    <MainPageDataContext.Provider value={{ data, isLoading, isError,carrousalData,mainPageProducts,_isLoading }}>
       {children}
     </MainPageDataContext.Provider>
   );

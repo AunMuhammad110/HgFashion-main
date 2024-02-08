@@ -1,4 +1,6 @@
+import "./index.css"
 export default function ExchangePolicy() {
+
   return (
     <div className="static-container">
       <div className="tc-static-container">

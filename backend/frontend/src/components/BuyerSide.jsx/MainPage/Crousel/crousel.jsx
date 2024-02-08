@@ -5,11 +5,12 @@ import "./carous.css";
 import MainPageDataContext from "../../GlobalData/MainPage";
 import TextTransition, { presets } from "react-text-transition";
 import { Navigate, useNavigate } from "react-router-dom";
+import SimpleBackdrop from "../../../Components/fullPageLoader";
 
 const Crousel = React.memo(() => {
   const [index, setIndex] = useState(0);
   const navigate = useNavigate();
-  const { carrousalData } = useContext(MainPageDataContext);
+  const { carrousalData,_isLoading } = useContext(MainPageDataContext);
   useEffect(() => {
     const intervalId = setInterval(
       () => setIndex((index) => index + 1),
@@ -18,8 +19,8 @@ const Crousel = React.memo(() => {
 
     return () => clearInterval(intervalId);
   }, []);
-  if (carrousalData.isLoading) {
-    return <></>;
+  if (_isLoading) {
+    return <SimpleBackdrop/>;
   }
   return (
     <Carousel
@@ -30,9 +31,10 @@ const Crousel = React.memo(() => {
         <Carousel.Item
           key={index}
           onClick={() =>
-            navigate("/product-section", {
-              state: { name: item.subCategoryName, id: 2 },
-            })
+            // navigate("/product-section", {
+            //   state: { name: item.subCategoryName, id: 2 },
+            // })
+            navigate(`/product-section?name=${item.subCategoryName}&id=${2}`)
           }
         >
           <div className="carousel-adj d-flex align-items-center ">

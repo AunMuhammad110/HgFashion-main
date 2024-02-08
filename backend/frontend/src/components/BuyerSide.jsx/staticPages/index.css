@@ -157,9 +157,9 @@ Custom tailoring
         padding: 3em 0.5em;
         
     }
-    .about-container >img {
+    .aboutus-image{
         width: 100%;
-        height:400px!important;
+        height:350px!important;
         margin-left: 0;
     }
     .about-main-container{
@@ -173,7 +173,22 @@ Custom tailoring
         margin-right: auto;
         font-size: 20px;
     }
+    .cc-static-container{
+        background-color: #ffffff;
+        padding: 1em 3em;
+    }
+    .cc-static-container > p, .cc-static-container > h1{
+        text-align: center;
+    }
 }
+
+.aboutus-image{
+        width: 100%;
+        height:650px;
+        margin-left: 0;
+        margin-right: 0;
+        /* margin-bottom: 0; */
+    }
 
 
 

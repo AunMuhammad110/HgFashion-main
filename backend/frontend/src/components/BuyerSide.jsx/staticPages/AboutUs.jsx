@@ -1,14 +1,13 @@
 import React from "react";
 import image from "../MainPage/Crousel/carrousal.jpeg";
+import "./index.css"
 // import image from "./staticPages/carousal.jpeg"
 export default function AboutUs() {
   return (
     <div className="about-main-container">
       <div className="about-container">
         <h2>About HiragFashion</h2>
-        <div>
-        <img src={image} alt="about us image" />
-        </div>
+        <img src={image} alt="about us image" className="aboutus-image"/>
         <h1 className="text-center hr-mt-20" >ABOUT US</h1>
         <p className="hr-mt-20">
         Welcome to Hira G Fashions, your premier destination for exquisite fashion finds. Established in 2012, we are a leading multi-brand online shopping store based in Pakistan, offering a curated selection of premium designer collections from renowned brands to clients both globally and locally.

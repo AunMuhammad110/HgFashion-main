@@ -157,29 +157,32 @@ const UpdateProduct = React.memo(() => {
   }
 
   const AddProduct = async () => {
+    // console.log("The images have been added",image);
     let imageArray = [];
-    // e.preventDefault();
     setIsLoading(true);
     if (!productformData.category || !productformData.subBrandName) {
       toast.error("Please fill the required inputs");
       return;
     }
     try {
-      await Promise.all(
-        rawImages.map(async (item) => {
-          await handleImage(item);
-          imageArray.push(imageUrl.current);
-        })
-      );
+        if(image.length > 0){
+          imageArray=image;
+        }
+        else{
+          await Promise.all(
+            rawImages.map(async (item) => {
+              await handleImage(item);
+              imageArray.push(imageUrl.current);
+            })
+          );
+        }
       let productId = nanoid(8);
 
-      const productResponse = await axiosClient.post("/UploadProduct", {
+      await axiosClient.post("/UploadProduct", {
         image: imageArray,
         productformData,
         productId,
-      });
-
-      if (productResponse.status === 200) {
+      }).then((response) => {
         setProductFormData({
           productName: "",
           category: "",
@@ -190,19 +193,27 @@ const UpdateProduct = React.memo(() => {
           productDetails: "",
           productWeight: 0,
         });
-        image1Ref.current.value = "";
-        image2Ref.current.value = "";
-        image3Ref.current.value = "";
-        imageUrl.current = "";
+        if(!(image.length >0)){
+          image1Ref.current.value = "";
+          image2Ref.current.value = "";
+          image3Ref.current.value = "";
+          imageUrl.current = "";
+        }
         setRawImages([]);
         imageArray = [];
         toast.success("Product Updated successfully");
-      }
+        console.log("The response was successfully", response)
+      })
+      .catch((error) => {
+        console.log("the error occurred", error);
+        toast.error("Error occurred while updating the product");
+      })
     } catch (error) {
       console.error("Error", error);
       toast.error("Failed to upload the product or images.");
     } finally {
       setIsLoading(false);
+      setDisplayCategory(false);
     }
   };
 

@@ -1,34 +1,21 @@
-import React, { useContext, useRef } from "react";
-import { useState, useEffect } from "react";
-import "./navbar.css";
-import NavBar from "./nav";
-import logo from "./hg2r.png";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import SimpleBackdrop from "../../Components/fullPageLoader";
 import MainPageDataContext from "../GlobalData/MainPage";
-import { useNavigate } from "react-router-dom"; 
-import CartIcon from "./cartIcon";
-import CheckOut from "../Checkout/checkout";
-import { Link } from "react-router-dom";
 import { useCount } from "../GlobalData/cartContext/cartData";
-
-
+import logo from "./hg2r.png";
+import NavBar from "./nav";
+import "./navbar.css";
 
 const Navbarr = React.memo(() => {
   const navigate = useNavigate();
-  const { state }=useCount();
-  console.log("the cart length is " + state.count);
-  // const cartDataLength = useRef;
-  const { data, isLoading, isError } = useContext(MainPageDataContext);
+  const {state}=useCount();
+  const { data, isLoading, isError,_isLoading} = useContext(MainPageDataContext);
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [smallImagesVisible, setSmallImagesVisible] = useState(true);
-  // useEffect(()=>{
-  //   const shoppingData = JSON.parse(window.localStorage.getItem("SHOPPING_DATA"));
-  //   if (shoppingData) {
-  //   cartDataLength.current=shoppingData.length;
-  //   }
-  // },[window.localStorage])
 
-  if (isLoading) {
-    return <p></p>;
+  if (_isLoading) {
+    return <SimpleBackdrop/>;
   }
   if (isError) {
     return <p></p>;
@@ -39,8 +26,11 @@ const Navbarr = React.memo(() => {
   };
   function Navigator(name, id, e) {
     e.preventDefault();
-    navigate("/product-section", { state: { name: name, id: id } });
+    // navigate("/product-section", { state: { name: name, id: id } });
+    navigate(`/product-section?name=${name}&id=${id}`);
+
   }
+  
 
 
   return (
@@ -48,7 +38,7 @@ const Navbarr = React.memo(() => {
       {smallImagesVisible && <NavBar />}
 
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container-fluid d-flex">
+        <div className="container-fluid d-flex" >
           <button
             className="navbar-toggler"
             type="button"
@@ -132,6 +122,7 @@ const Navbarr = React.memo(() => {
                       className="dropdown-item"
                       key={index}
                       href="#"
+                      data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show"
                     >
                       {item.subBrandName}
                     </a>
@@ -156,6 +147,7 @@ const Navbarr = React.memo(() => {
                       onClick={() => Navigator(item.subBrandName, 2, event)}
                       className="dropdown-item"
                       key={index}
+                      data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show"
                       href="#"
                     >
                       {item.subBrandName}
@@ -180,6 +172,7 @@ const Navbarr = React.memo(() => {
                     <a
                       onClick={() => Navigator(item.subBrandName, 2, event)}
                       className="dropdown-item"
+                      data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show"
                       key={index}
                       href="#"
                     >
@@ -209,6 +202,7 @@ const Navbarr = React.memo(() => {
                       className="dropdown-item"
                       key={index}
                       href="#"
+                      data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show"
                     >
                       {item.brandName}
                     </a>
@@ -235,6 +229,7 @@ const Navbarr = React.memo(() => {
                       className="dropdown-item"
                       key={index}
                       href="#"
+                      data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show"
                     >
                       {item.subBrandName}
                     </a>
@@ -259,6 +254,7 @@ const Navbarr = React.memo(() => {
                       onClick={() => Navigator(item.subBrandName, 2, event)}
                       className="dropdown-item"
                       key={index}
+                      data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show"
                       href="#"
                     >
                       {item.subBrandName}

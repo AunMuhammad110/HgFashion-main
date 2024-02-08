@@ -5,6 +5,7 @@ import { FormFeedback } from "reactstrap";
 import axios from "axios";
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
+import "./index.css"
 
 function FormmFeedback() {
     // const productIds =[{productId:"D0010201",quantity:2},{productId:"D0010203",quantity:1}];
@@ -96,7 +97,7 @@ function FormmFeedback() {
                                         style={{
                                             // width:"20px",
                                             // height:"20px",
-                                            fontSize:"80px"
+                                            fontSize:"20px"
                                         }}
                                         name="simple-controlled"
                                         value={rating}

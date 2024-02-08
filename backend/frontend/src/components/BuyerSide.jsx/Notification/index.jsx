@@ -13,6 +13,8 @@ export default function NotificationController() {
       try {
         const res = await axiosClient.get("/buyerSide/GetNotifications");
         notificationDataRef.current = res.data;
+        console.log("the response is ", res.data);
+        
         if(res.data.length===0){
           setShowNothing(true);
         }
@@ -38,7 +40,7 @@ export default function NotificationController() {
           count.current = count.current + 1;
         }
       }, 3000);
-    }, 12000);
+    }, 16000);
     return () => clearInterval(intervalId);
   }, []);
   const CloseAdd =() =>{

@@ -98,7 +98,9 @@ const UploadProduct = React.memo(() => {
         })
       );
       let productId = nanoid(8);
-
+        console.log("image array",imageArray);
+        console.log("product form data",productformData);
+        console.log("product Id",productId);
       const productResponse = await axiosClient.post("/UploadProduct", {
         image: imageArray,
         productformData,

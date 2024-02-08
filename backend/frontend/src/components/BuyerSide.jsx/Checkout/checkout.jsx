@@ -213,8 +213,8 @@ function CheckOut() {
             </>
           ) : (
             <div className="container">
-              <div className="row">
-                <img src={Imageee} alt="" srcset="" />
+              <div className="row display-flex">
+                <img src={Imageee} alt="" srcset="" style={{textAlign:"center"}} />
               </div>
             </div>
           )}

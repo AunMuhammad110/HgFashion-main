@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useCount } from '../GlobalData/cartContext/cartData';
+import axiosClient from '../../../apisSetup/axiosClient';
 // Create a context
 const DataContext = createContext();
 
@@ -110,7 +111,11 @@ export const DataProvider = ({ children }) => {
       try {
         if (cart.length !== 0) {
           console.log(cart)
-          const response = await axios.post("http://localhost:3334/GetProducts", cart);
+          
+          const response = await axiosClient.post(
+            "/GetProducts",cart
+          );
+          // const response = await axios.post("http://localhost:3334/GetProducts", cart);
           // console.log(response)
           setData(response.data);
         }

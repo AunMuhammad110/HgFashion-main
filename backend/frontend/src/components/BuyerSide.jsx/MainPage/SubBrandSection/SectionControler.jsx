@@ -2,10 +2,11 @@ import MainPageDataContext from "../../GlobalData/MainPage";
 import { useContext } from "react";
 import SubBrandSection from "./subbrandSection";
 import React from "react";
+import SimpleBackdrop from "../../../Components/fullPageLoader";
 const SectionController =React.memo(()=>{
-  const { data, isLoading, isError } = useContext(MainPageDataContext);
-  if (isLoading) {
-    return <p></p>;
+  const { data, isLoading, isError,_isLoading } = useContext(MainPageDataContext);
+  if (_isLoading) {
+    return <SimpleBackdrop/>;
     }
 
     const arrayShopByBrand=data[0].map((item)=>(

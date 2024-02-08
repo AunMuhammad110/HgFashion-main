@@ -1,6 +1,6 @@
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate,useParams } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import axiosClient from "../../../apisSetup/axiosClient";
 import { useCount } from "../GlobalData/cartContext/cartData";
@@ -8,21 +8,23 @@ import ProductCard from "../ProductSection/brandCards/brandCards";
 import "./card.css";
 import ImageCarousel from "./crousel-img";
 import ZoomImage from "./zoomImage";
+import SimpleBackdrop from "../../Components/fullPageLoader";
 
 
 const ImageGallery = React.memo(() => {
   const {state,dispatch}= useCount();
   const locationData = useLocation();
 
-  const {
-    state: { id, parentCollection },
-  } = locationData;
+  // const {
+  //   state: { id, parentCollection },
+  // } = locationData;
+  let { productId, parentCollection ,id} = useParams();
+  const [isLoading, setIsLoading] =useState(true);
   const [number, setNumber] = useState(1);
   const navigate = useNavigate();
   const [productData, setProductData] = useState({}); // Move useLocation inside the component
   const [showError, setShowError] = useState(false);
   const [selectedImage, setSelectedImage] = useState([]);
-  const [showButtonError, setShowButtonError] = useState(false);
   const [smallImagesVisible, setSmallImagesVisible] = useState(true);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
@@ -30,12 +32,13 @@ const ImageGallery = React.memo(() => {
     const fetchData = async () => {
       try {
         const res = await axiosClient.get(
-          `/buyerSide/GetProductDetails/${id}`, {
+          `/buyerSide/GetProductDetails/${productId}`, {
           params: { parentCollection }
         }
         );
         setProductData(res.data);
         setSelectedImage(res.data.images[0]);
+        setIsLoading(false);
         return;
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -76,7 +79,7 @@ const ImageGallery = React.memo(() => {
     AddDataLocalStorage(productId,quantity);
     dispatch({type:'INCREMENT'})
     setTimeout(()=>{
-      navigate('/context/chkout')
+
     },800)
   };
 
@@ -93,7 +96,7 @@ const ImageGallery = React.memo(() => {
   };
 
   const decrement = () => {
-    if (number > 0) {
+    if (number > 1) {
       setNumber(number - 1);
     }
   };
@@ -115,49 +118,11 @@ const ImageGallery = React.memo(() => {
       existingCartItems.push(newCartItem);
     }
   
-    // Update the cart in localStorage
     localStorage.setItem('SHOPPING_DATA', JSON.stringify(existingCartItems));
-    // setShowButtonError(false);
-    // let prevShoppingData =
-    //   JSON.parse(window.localStorage.getItem("SHOPPING_DATA")) || [];
-
-    // const productInfo = {
-    //   productId: productData.productId,
-    //   quantity: number,
-    // };
-
-    // // Check if the productId is already in the array
-    // const existingProductIndex = prevShoppingData.findIndex(
-    //   (item) => item.productId === productData.productId
-    // );
-
-    // if (existingProductIndex !== -1) {
-    //   // If productId exists, update the quantity
-    //   prevShoppingData[existingProductIndex].quantity = number;
-    // } else {
-    //   // If productId doesn't exist, add a new object to the array
-    //   prevShoppingData.push(productInfo);
-    // }
-
-
-    // // Save the updated array back to localStorage
-    // window.localStorage.setItem(
-    //   "SHOPPING_DATA",
-    //   JSON.stringify(prevShoppingData)∏
-    // );
-    // setShowSuccessMessage(true);
-
-    // setTimeout(() => {
-    //   setShowSuccessMessage(false);
-    // }, 3000);
   }
-  if(!productData){
-    return <></>
-  }
-  else{
-    console.log({productData})
-  }
+  if(isLoading) return <SimpleBackdrop/>
   return (
+    // <h1>hello</h1>
     <div>
     {Object.keys(productData).length > 0 && (
       <div className="container-fluid wt">
@@ -317,18 +282,20 @@ const ImageGallery = React.memo(() => {
               </div>
           </div>
         </div>
-        {productData["relatedProducts"] && (
+        {productData.relatedProducts.length > 0 && (
           <div className="related-products-main">
             <p>RELATED PRODUCTS</p>
             <hr />
             <div className="related-products-container">
               {productData.relatedProducts.map((item, index) => {
-                if (item.productId != id) {
+                if (item.productId != productId) {
                   return (
                     <ProductCard
                       className={"change-height"}
                       item={item}
-                      parentCollection={parentCollection}
+                      name={parentCollection}
+                      id={id}
+                      // parentCollection={parentCollection}
                       key={index}
                     />
                   );
@@ -336,20 +303,22 @@ const ImageGallery = React.memo(() => {
               })}
             </div>
 
-            <div className="related-product-button">
+            
+          </div>
+        )}
+        <div className="related-product-button">
               <button
                 onClick={() =>
-                  navigate("/product-section", { state: parentCollection })
+                  // navigate("/product-section", { state: parentCollection })
+                  navigate(`/product-section?name=${parentCollection}&id=${id}`)
                 }
               >
                 <span>
                   <KeyboardBackspaceIcon />
                 </span>
-                BACK TO {parentCollection.name.toUpperCase()}
+                BACK TO {parentCollection.toUpperCase()}
               </button>
             </div>
-          </div>
-        )}
    
       </div>
 

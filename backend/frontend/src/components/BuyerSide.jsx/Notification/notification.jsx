@@ -2,20 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 
 import "./index.css"
-import image from "./hania.jpg"
 export default function NotificationCard(props){
     const navigate=useNavigate();
-    const CloseAdd =() =>{
-            alert("it ran");
-    }
     function naviagtor(){
-        navigate('/product-detail', {
-            state: {
-              id: props.productId,
-              parentCollection: { name: props.brandName, id: 1 }
-            }
-          });
-          
+          navigate(`/product-detail/${props.productId}/${props.brandName}/${1}`);
     }
     return(
         <div className="notification-ads-container">

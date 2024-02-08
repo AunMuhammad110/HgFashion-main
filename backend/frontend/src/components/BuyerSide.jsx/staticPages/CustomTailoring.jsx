@@ -1,3 +1,4 @@
+import "./index.css"
 export default function CustomTailoring(){
     return(
         <div className="static-container">

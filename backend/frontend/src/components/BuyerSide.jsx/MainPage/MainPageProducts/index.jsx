@@ -4,13 +4,17 @@ import { useContext, useEffect, useState } from "react";
 import "./index.css";
 import MainPageDataContext from "../../GlobalData/MainPage";
 import ProductCard from "../../ProductSection/brandCards/brandCards";
+import SimpleBackdrop from "../../../Components/fullPageLoader";
+
 export default function MainPageProducts() {
   const [showSaleButton, setShowSalesButton] = useState(false);
   const [showFProductButton, setShowFProductButton] = useState(false);
   const navigate = useNavigate();
   const {
     mainPageProducts: { data, isLoading, isError },
+    _isLoading
   } = useContext(MainPageDataContext);
+
   useEffect(() => {
     if (data) {
       if (data["subBrandDetails"][0]["productData"].length === 4)
@@ -19,8 +23,9 @@ export default function MainPageProducts() {
         setShowFProductButton(true);
     }
   }, [data]);
-  if (isLoading) {
-    return <></>;
+
+  if (_isLoading) {
+    return <SimpleBackdrop/>;
   }
 
   return (
@@ -36,7 +41,9 @@ export default function MainPageProducts() {
                     item={item}
                     key={index}
                     className={"change-height"}
-                    parentCollection={{ name: item.subBrandName, id: 2 }}
+                    name={item.subBrandName}
+                    id={2}
+                    // parentCollection={{ name: item.subBrandName, id: 2 }}
                   />
                 );
               })}
@@ -45,7 +52,7 @@ export default function MainPageProducts() {
               <div className="related-product-button button-padding">
                 <button
                   onClick={() => {
-                    navigate("/product-section", { state: { name: data["subBrandDetails"][0]["subBrandName"], id: 2 } });
+                    navigate(`/product-section?name=${data["subBrandDetails"][0]["subBrandName"]}&id=${2}`);
                   }}
                 >
                   View All
@@ -64,8 +71,10 @@ export default function MainPageProducts() {
                   <ProductCard
                     item={item}
                     key={index}
+                    id={2}
+                    name={item.subBrandName}
                     className={"change-height"}
-                    parentCollection={{ name: item.subBrandName, id: 2 }}
+                    // parentCollection={{ name: item.subBrandName, id: 2 }}
                   />
                 );
               })}
@@ -74,8 +83,7 @@ export default function MainPageProducts() {
               <div className="related-product-button button-padding">
                 <button
                   onClick={() => {
-                    // alert("it ran"
-                    navigate("/product-section", { state: { name: data["subBrandDetails"][1]["subBrandName"], id: 2 } });
+                    navigate(`/product-section?name=${data["subBrandDetails"][1]["subBrandName"]}&id=${2}`);
                   }}
                 >
                   View All

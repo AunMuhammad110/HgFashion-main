@@ -5,6 +5,7 @@ import "./index.css";
 import ProductCard from "./brandCards/brandCards";
 import axiosClient from "../../../apisSetup/axiosClient";
 import { useRequestProcessor } from "../../../apisSetup/requestProcessor";
+import SimpleBackdrop from "../../Components/fullPageLoader";
 
 export default function MainProductSection() {
   const location = useLocation();
@@ -13,36 +14,56 @@ export default function MainProductSection() {
   const [productData, setProductData] = useState([]);
   const [showMore, setShowMore] = useState(false);
   const [offsetCount, setOffsetCount] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const params = new URLSearchParams(location.search);
+  const name = params.get('name');
+  const id = params.get('id');
 
   useEffect(() => {
-    setTag(location?.state?.name);
-  }, [location?.state]);
+    setTag(name);
+    setProductData([]);
+    setOffsetCount(1);
+    console.log("The location", location.state)
+  }, [name,id]);
 
   const mutation = mutate("unique", async () => {
     try {
       const response = await axiosClient.post("/buyerSide/GetProducts", {
-        locationData: location.state,
+        locationData: {name: name, id:parseInt(id)},
         offsetCount: offsetCount,
       });
-      if (!productData.length === 0) {
+      
+      console.log("The response is ", response.data);
+      // Check if there are existing products
+      if (productData.length > 0) {
+        // Check if the first product of the response matches the last product in productData
         if (
-          productData[0].brandName === response.data[0].brandName &&
-          productData[0].subBrandName === response.data[0].subBrandName
+          productData[productData.length - 1].brandName === response.data[0].brandName &&
+          productData[productData.length - 1].subBrandName === response.data[0].subBrandName
         ) {
-          setProductData([...productData, ...response.data]);
+          // Append the new products to the existing productData
+          setProductData([...productData, ...response.data.slice(1)]);
+        } 
+        else{
+          setProductData(response.data);
         }
       } else {
+        // If there are no existing products, set the response data as productData
         setProductData(response.data);
       }
-      if (response.data.length === 25) setShowMore(true);
+  
+      // Update showMore based on the length of response data
+      setShowMore(response.data.length === 25);
     } catch (error) {
       console.error("Error:", error);
-    }
+    } 
   });
+  
 
   useEffect(() => {
     mutation.mutate();
-  }, [location, offsetCount]);
+  }, [name, offsetCount]);
   useEffect(() => {
     if (productData.length % 25 !== 0) {
       setShowMore(false);
@@ -50,12 +71,12 @@ export default function MainProductSection() {
   }, [productData]);
   useEffect(() => {
     setProductData([]);
-  }, [location]);
-  if (mutate.isLoading) {
-    return <></>;
+  }, [name]);
+  if(mutation.isLoading){
+    return <SimpleBackdrop/>
   }
 
-  if (productData.length === 0) {
+  else if (productData.length === 0) {
     return (
       <div className="product-main-container">
          <h1>{tag.toUpperCase()}</h1>
@@ -80,7 +101,8 @@ export default function MainProductSection() {
               <ProductCard
                 key={index}
                 item={item}
-                parentCollection={location.state}
+                name={name}
+                id={id}
               />
             );
           })}

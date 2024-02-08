@@ -1,55 +1,44 @@
-import React, { useEffect, useRef } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Route, Routes, useLocation } from "react-router-dom";
 
-const LazyMainProductSection = React.lazy(() =>
-  import("./ProductSection/mainSection")
-);
-import ImageGallery from "./Card/Detailcard";
 import { MainDataProvider } from "./GlobalData/MainPage";
 import { CountProvider } from "./GlobalData/cartContext/cartData";
-import CarrousalSectionWrapper from "./MainPage";
-import MainPageProducts from "./MainPage/MainPageProducts";
-import Navbarr from "./Navbarr/navbar";
-import NotificationController from "./Notification";
-import MainProductSection from "./ProductSection/mainSection";
-import AboutUs from "./StaticPages/AboutUs";
-import CustomTailoring from "./StaticPages/CustomTailoring";
-import ExchangePolicy from "./StaticPages/ExchangePolicy";
+const ImageGallery =React.lazy(()=> import("./Card/Detailcard"))
+const CarrousalSectionWrapper =React.lazy(()=> import("./MainPage"))
+const MainPageProducts =React.lazy(()=> import("./MainPage/MainPageProducts"))
+const Navbarr =React.lazy(()=> import("./Navbarr/navbar"))
+const NotificationController =React.lazy(()=> import("./Notification"))
+const MainProductSection =React.lazy(()=> import("./ProductSection/mainSection"))
+const AboutUs =React.lazy(()=> import("./StaticPages/AboutUs"))
+const CustomTailoring =React.lazy(()=> import("./StaticPages/CustomTailoring"))
+const ExchangePolicy =React.lazy(()=> import("./StaticPages/ExchangePolicy"))
+const PrivacyPolicy =React.lazy(()=> import("./StaticPages/PrivacyPolicy"))
+const TermsCondition =React.lazy(()=> import("./StaticPages/TermsCondiiton"))
+const WhatsAppPopUp =React.lazy(()=> import("./WhatsappComponent/whatsapp"))
+const Footer =React.lazy(()=> import("./footer/footer"))
+import Feedback from "./staticPages/feedback"
+const SubTree =React.lazy(()=> import("./useContextt/routeescomp"))
 import Faqs from "./staticPages/Faqs";
-import PrivacyPolicy from "./StaticPages/PrivacyPolicy";
-import TermsCondition from "./StaticPages/TermsCondiiton";
-import WhatsAppPopUp from "./WhatsappComponent/whatsapp";
-import Footer from "./footer/footer";
-import Feedback from "./staticPages/feedback";
-import SubTree from "./useContextt/routeescomp";
+import SimpleBackdrop from "../Components/fullPageLoader";
 
 const MainLayout = ({ children }) => {
-  const topRef=useRef();
+  const topRef = useRef();
+  const location = useLocation();
 
-  const location= useLocation();
-  // const currentPageKey= location.pathname.split("/")[1];
   useEffect(() => {
-  //   // Scroll the layout-content element to the top when the location changes
-  //   const element = document.querySelector(".layout-content")[0];
-  //   if (element) {
-  //     element.scrollTop = 0;
-  //   }
-  //   window.scrollTo(0, 0);
-  topRef.current.scrollIntoView();
-
+    topRef.current.scrollIntoView();
   }, [location.pathname]);
-  return(
-  <div className="layout-content" ref={topRef}>
-    <Navbarr />
+  return (
+    <div className="layout-content" ref={topRef}>
+      <Navbarr />
       {children}
-    <NotificationController />
-    <WhatsAppPopUp />
-    <Footer />
-  </div>
-)};
-
-
+      <NotificationController />
+      <WhatsAppPopUp />
+      <Footer />
+    </div>
+  );
+};
 
 const queryClient = new QueryClient();
 
@@ -57,7 +46,7 @@ function MainBuyer(props) {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        {/* <Suspense fallback={<SimpleBackdrop/>}> */}
+        <Suspense fallback={<SimpleBackdrop/>}>
         <div>
           <CountProvider>
             <MainDataProvider>
@@ -79,13 +68,14 @@ function MainBuyer(props) {
                   }
                 />
                 <Route
-                  path="/product-detail"
+                  path="/product-detail/:productId/:parentCollection/:id"
                   element={
                     <MainLayout>
                       <ImageGallery />
                     </MainLayout>
                   }
                 />
+
                 <Route
                   path="/terms-condition"
                   element={
@@ -163,8 +153,10 @@ function MainBuyer(props) {
             </MainDataProvider>
           </CountProvider>
           <NotificationController />
-        </div>
+            </div>
+            </Suspense>
       </QueryClientProvider>
+
       <WhatsAppPopUp />
     </>
   );
