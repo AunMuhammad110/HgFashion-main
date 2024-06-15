@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Surprise For Khushbakht</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+        @import url( 
+'https://fonts.googleapis.com/css2?family=Roboto|Pacifico&display=swap'); 
+        body{
+            padding: 50px 80px;
+            font-family: "Kaushan Script", cursive; 
+        }
+        p{
+            font-family: sans-serif;
+        }
+        h1{
+            font-size: 40px !important;
+        }
+        span{
+            font-family: "Kaushan Script", cursive; 
+        }
+      .main-container {
+        color: white !important;
+        background-image: url("https://i.ibb.co/9mXHfSf/Whats-App-Image-2024-03-22-at-02-48-03.jpg");
+        background-repeat: no-repeat;
+        background-size: cover; 
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+      }
+      .flex-container {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .shadow-box {
+
+        width: 700px;
+        height: 680px;
+        background-color: transparent;
+        margin: 40px;
+      }
+      #text-message {
+        max-width: 500px;
+        margin-top: 20px;
+        text-align: center;
+        font-family: "Raleway", sans-serif; /* Applying Raleway font */
+      }
+      .fade-in {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+      .fade-in.active {
+        opacity: 1;
+      }
+      button{
+        padding: 10px 20px;
+        font-size: 18px;
+        min-width: 200px;
+        font-family: "Kaushan Script", cursive; 
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="shadow-box flex-container">
+        <h1 id="message">Click me 20 times</h1>
+        <button onclick="increaseCount()" id="click-button">
+          Click me <span id="click-count">[ 0 ]</span>
+        </button>
+        <p id="text-message" style="font-size: 18px;"></p>
+        <h1 id="last-message" style="text-align: center;"></h1>
+        <p id="req-message" style="text-align: center;"></p>
+      </div>
+    </div>
+    <script>
+      let count = 0;
+
+      function increaseCount() {
+        count++;
+        if (count < 20  ) {
+          document.getElementById("click-count").textContent = `[ ${count} ]`;
+        } else {
+          document.getElementById("message").textContent =
+            "Welcome Khushbakht to something new.";
+          document.getElementById("click-button").style.display = "none";
+          setTimeout(() => {
+            const nextButton = document.createElement("button");
+            nextButton.textContent = "Click me to move forward";
+            nextButton.id = "next-button";
+            nextButton.className = "fade-in";
+            nextButton.onclick = showMessage;
+            document.querySelector(".flex-container").appendChild(nextButton);
+            setTimeout(() => {
+              nextButton.classList.add("active");
+            }, 100);
+          }, 2000);
+        }
+      }
+
+      function showMessage() {
+        document.getElementById("message").textContent = "I am sorry khushu";
+        document.getElementById("text-message").textContent =
+          "Your are the most loving person in the world. kabhi kabhi ma yh bat bhul jata gusse ma but jab yad ati mujhe again tumhari qadar ajati or pehle sa barh jati. I am sorry for being rude, and I will make sure to never be like that again. please bas ab yh time cahiya end kardo Pleaseeeeee !!!!";
+          document.getElementById("req-message").textContent ="Aghar yh acha lage to Thanks mat karna ek lambi si mirror bhejdena mujhe andhaza hojaiega tmhy kitna acha laga"
+        document.getElementById("next-button").textContent =
+          "Next";
+        document.getElementById("next-button").onclick = finalMessage;
+      }
+
+      function finalMessage() {
+        document.getElementById("message").textContent = "";
+        document.getElementById("text-message").textContent = "";
+        document.getElementById("last-message").textContent =
+          "Thank you so much for being mine. ✨✨✨✨✨✨✨ "
+          document.getElementById("req-message").textContent ="";
+         
+        document.getElementById("next-button").remove();
+      }
+    </script>
+  </body>
+</html>

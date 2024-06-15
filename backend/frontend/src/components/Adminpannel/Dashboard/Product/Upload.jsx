@@ -68,20 +68,17 @@ const UploadProduct = React.memo(() => {
   };
 
   function handleChange(event) {
-    const { name, value, type } = event.target;
-
-    // Check if the input type is 'number' and the value is a valid number
-    const numericValue = type === "number" ? parseFloat(value) : value;
-
+    const { name, value } = event.target;
     setProductFormData((prevFormData) => {
       return {
         ...prevFormData,
-        [name]: numericValue,
+        [name]: value,
       };
     });
   }
 
   const AddProduct = async (e) => {
+    console.log("The raw images is ", rawImages)
     let imageArray = [];
     e.preventDefault();
     setIsLoading(true);
@@ -92,11 +89,12 @@ const UploadProduct = React.memo(() => {
     }
     try {
       await Promise.all(
-        rawImages.map(async (item) => {
+        rawImages.map(async (item, index) => {
           await handleImage(item);
-          imageArray.push(imageUrl.current);
+          imageArray[index] = imageUrl.current;
         })
       );
+      console.log({imageArray})
       let productId = nanoid(8);
         console.log("image array",imageArray);
         console.log("product form data",productformData);
