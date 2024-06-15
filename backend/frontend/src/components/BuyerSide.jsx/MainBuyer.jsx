@@ -31,9 +31,7 @@ const MainLayout = ({ children }) => {
   }, [location.pathname]);
   return (
     <div className="layout-content" ref={topRef}>
-      {/* <div  ref={topRef} > */}
       <Navbarr />
-      {/* </div> */}
       {children}
       <NotificationController />
       <WhatsAppPopUp />

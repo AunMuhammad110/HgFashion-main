@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Crousel from "./Crousel/crousel";
 import SectionController from "./SubBrandSection/SectionControler";
 import MainPageProducts from "./MainPageProducts";
+import ImageGallery from "../Card/Detailcard";
 
 export default function CarrousalSectionWrapper() {
     useEffect(() => {
@@ -13,8 +14,8 @@ export default function CarrousalSectionWrapper() {
     <>
       <Crousel /> 
       <SectionController />
+      {/* <ImageGallery /> */}
       <MainPageProducts/>
     </>
   );
 }
-`
